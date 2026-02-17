@@ -4,9 +4,11 @@
 #include <input/processors.dtsi>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 #include <behaviors.dtsi>
+#include <behaviors/pmw3610_rotation.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
+#include <dt-bindings/zmk/pmw3610_rotation.h>
 
 #define DEFAULT   0
 #define RAISE     1
@@ -135,6 +137,19 @@
     };
 
     behaviors {
+        rot_enc_cw: pmw3610_rot_cw {
+            compatible = "zmk,behavior-pmw3610-rotation";
+            #binding-cells = <0>;
+            cw-mode = ROT_CW;
+            step-angle-degree = <15>;
+        };
+
+        rot_enc_ccw: pmw3610_rot_ccw {
+            compatible = "zmk,behavior-pmw3610-rotation";
+            #binding-cells = <0>;
+            cw-mode = ROT_CCW;
+            step-angle-degree = <15>;
+        };
         mtb: mt_balanced {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -273,6 +288,12 @@
             bindings = <&kp>, <&kp>;
         };
 
+        enc_rot: encorder_rotation {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&rot_enc_ccw>, <&rot_enc_cw>;
+        };
+
         mouse_scrl: mouse_wheel_scrl {
             compatible = "zmk,behavior-sensor-rotate-var";
             #sensor-binding-cells = <2>;
@@ -327,6 +348,7 @@
         LOWER {
             display-name = "lower_layer";
             sensor-bindings = <&enc_var C_BRI_UP C_BRI_DN>;
+            //sensor-bindings = <&enc_rot>;
             bindings = <
 //┬────────────┬────────────┬────────────┬────────────┬────────────╮                                       ╭────────────┬────────────┬────────────┬────────────┬──────────────╮
 //|  ?         |  "         |  !         |            |  ~         |                                       |            |  _         |  (         |  )         |  %           |
