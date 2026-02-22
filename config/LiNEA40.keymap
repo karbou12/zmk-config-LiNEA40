@@ -4,15 +4,10 @@
 #include <input/processors.dtsi>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
 #include <behaviors.dtsi>
-#ifdef CONFIG_PWM3610
 #include <behaviors/pmw3610_rotation.dtsi>
-#endif
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
-#ifdef CONFIG_PWM3610
-#include <dt-bindings/zmk/pmw3610_rotation.h>
-#endif
 
 #define DEFAULT   0
 #define RAISE     1
@@ -141,22 +136,6 @@
     };
 
     behaviors {
-#ifdef CONFIG_PMW3610
-        rot_enc_cw: pmw3610_rot_cw {
-            compatible = "zmk,behavior-pmw3610-rotation";
-            #binding-cells = <0>;
-            cw-mode = ROT_CW;
-            step-angle-degree = <15>;
-        };
-
-        rot_enc_ccw: pmw3610_rot_ccw {
-            compatible = "zmk,behavior-pmw3610-rotation";
-            #binding-cells = <0>;
-            cw-mode = ROT_CCW;
-            step-angle-degree = <15>;
-        };
-#endif
-
         mtb: mt_balanced {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -295,13 +274,18 @@
             bindings = <&kp>, <&kp>;
         };
 
-#ifdef CONFIG_PMW3610
-        enc_rot: encorder_rotation {
+        tb_rot_enc: pmw3610_trackball_rot_with_enc {
+            compatible = "zmk,behavior-pmw3610-rotation";
+            #binding-cells = <1>;
+            step-angle-degree = <13>;
+            display-name = "PMW3610 Trackball Rotation with the step of rotary encoder";
+        };
+
+        enc_tb_rot_enc: encoder_pmw3610_trackball_rot_with_enc {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
-            bindings = <&rot_enc_ccw>, <&rot_enc_cw>;
+            bindings = <&tb_rot_enc ROT_CCW>, <&tb_rot_enc ROT_CW>;
         };
-#endif
 
         mouse_scrl: mouse_wheel_scrl {
             compatible = "zmk,behavior-sensor-rotate-var";
@@ -356,8 +340,9 @@
 
         LOWER {
             display-name = "lower_layer";
-            sensor-bindings = <&enc_var C_BRI_UP C_BRI_DN>;
-            //sensor-bindings = <&enc_rot>;
+            //sensor-bindings = <&enc_var C_BRI_UP C_BRI_DN>;
+            //sensor-bindings = <&enc_tb_rot_45>;
+            sensor-bindings = <&enc_tb_rot_enc>;
             bindings = <
 //┬────────────┬────────────┬────────────┬────────────┬────────────╮                                       ╭────────────┬────────────┬────────────┬────────────┬──────────────╮
 //|  ?         |  "         |  !         |            |  ~         |                                       |            |  _         |  (         |  )         |  %           |
