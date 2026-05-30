@@ -16,7 +16,7 @@ manifest:
     - name: zmk-rgbled-widget
       remote: caksoylar
       revision: main
-    - name: zmk-feature-trackball_shift
+    - name: zmk-trackball-shift
       remote: karbou12
       revision: main
   self:
