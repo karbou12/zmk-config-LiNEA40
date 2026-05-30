@@ -99,13 +99,43 @@
 };
 
 &trackball_listener {
+    input-processors = <
+            &zip_xy_transform INPUT_TRANSFORM_XY_SWAP
+            &zip_xy_transform INPUT_TRANSFORM_Y_INVERT
+            &zip_temp_layer MOUSE 5000
+    >;
+
     scroller {
         layers = <SCROLL>;
-        input-processors =
-            /* <&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>, */
-            //スクロール方向を逆転
-            <&zip_xy_to_scroll_mapper>;
+        input-processors = <
+            &zip_xy_transform INPUT_TRANSFORM_XY_SWAP
+            &zip_xy_transform INPUT_TRANSFORM_X_INVERT
+            &zip_xy_transform INPUT_TRANSFORM_Y_INVERT
+            &zip_xy_to_scroll_mapper &zip_scroll_scaler 1 100
+        >;
+        process-next;
     };
+
+    snipe_layer {
+        layers = <LOWER>;
+        input-processors = <
+            &zip_xy_scaler 1 4
+        >;
+        process-next;
+    };
+};
+
+&zip_temp_layer {
+    require-prior-idle-ms = <200>;
+    excluded-positions = <
+           11 12 13               16 17 18 19
+        20                        26 27
+                 34
+    >;
+};
+
+&mkp_input_listener {
+    input-processors = <&zip_temp_layer MOUSE 5000>;
 };
 
 / {
