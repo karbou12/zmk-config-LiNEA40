@@ -11,6 +11,10 @@
         ;
 };
 
+&uicr {
+    nfct-pins-as-gpios;
+};
+
 &left_encoder {
    status = "okay";
 };
