@@ -104,8 +104,6 @@
 
 &trackball_listener {
     input-processors = <
-            &zip_xy_transform INPUT_TRANSFORM_XY_SWAP
-            &zip_xy_transform INPUT_TRANSFORM_Y_INVERT
             &zip_trackball_shift
             &zip_temp_layer MOUSE 5000
     >;
@@ -113,10 +111,7 @@
     scroller {
         layers = <SCROLL>;
         input-processors = <
-            &zip_xy_transform INPUT_TRANSFORM_XY_SWAP
-            &zip_xy_transform INPUT_TRANSFORM_Y_INVERT
             &zip_trackball_shift
-            &zip_xy_transform INPUT_TRANSFORM_X_INVERT
             &zip_xy_to_scroll_mapper &zip_scroll_scaler 1 100
         >;
     };
@@ -146,6 +141,10 @@
 
 &mkp_input_listener {
     input-processors = <&zip_temp_layer MOUSE 5000>;
+};
+
+&zip_trackball_shift {
+    default-device-angle-deg = <270>;
 };
 
 / {
@@ -444,7 +443,7 @@
 //┼────────────┼────────────┼────────────┼────────────┼────────────┤                                       ├────────────┼────────────┼────────────┼────────────┼──────────────┤
   &none        &none        &none        &none        &none                                                &none        &none        &none        &none        &none 
 //├────────────┼────────────┼────────────┼────────────┼────────────┼────────────╮             ╭────────────┼────────────┼────────────┴────────────┼────────────┼──────────────┤
-  &tbr TB_CCW_45  &tbr TB_CW_45  &tbr TB_0_DEG  &none  &none       &studio_unlock             &bt BT_CLR   &bt BT_CLR_ALL            &none        &none        &bootloader
+  &tbr TB_CCW_45  &tbr TB_CW_45  &tbr TB_270_DEG  &none  &none     &studio_unlock             &bt BT_CLR   &bt BT_CLR_ALL            &none        &none        &bootloader
 //╰────────────┴────────────┴────────────╯            ╰────────────┴────────────╯             ╰────────────┴────────────╯            ╰────────────┴────────────┴──────────────╯
             >;
         };
