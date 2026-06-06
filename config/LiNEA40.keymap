@@ -11,6 +11,7 @@
 #include <input_processors/trackball_direction_detection.dtsi>
 #include <behaviors/trackball_shift_rotation.dtsi>
 #include <behaviors/trackball_direction_detection.dtsi>
+#include "us_keymap.h"
 
 #define DEFAULT   0
 #define RAISE     1
@@ -44,27 +45,7 @@
 #define RIGHT_KEYS RIGHT_TOP RIGHT_MID RIGHT_BOTTOM
 #define THUMBS     LEFT_THUMBS RIGHT_THUMBS
 
-#define MY_N0       KP_N0
-#define MY_N1       KP_N1
-#define MY_N2       KP_N2
-#define MY_N3       KP_N3
-#define MY_N4       KP_N4
-#define MY_N5       KP_N5
-#define MY_N6       KP_N6
-#define MY_N7       KP_N7
-#define MY_N8       KP_N8
-#define MY_N9       KP_N9
-#define MY_PLUS     KP_PLUS
-#define MY_MINUS    KP_MINUS
-#define MY_MULTIPLY KP_MULTIPLY
-#define MY_DIVIDE   KP_DIVIDE
-#define MY_EQUAL    KP_EQUAL
-#define MY_DOT      KP_DOT
-
-#define CAP_1       LG(LS(N3))
-#define CAP_2       LG(LS(N4))
-#define CAP_3       LG(LS(N5))
-#define LOCK        &kp LG(LC(Q))
+#define BT_SEL_QAZ40  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4
 
 //mouse cursol
 
@@ -335,19 +316,10 @@
             display-name = "Default";
             sensor-bindings = <&enc_root>;
             bindings = <
-
-//┬────────────┬────────────┬────────────┬────────────┬────────────╮                                       ╭────────────┬────────────┬────────────┬────────────┬──────────────╮
-//|  Q         |  W         |  E         |  R         |  T         |                                       |  Y         |  U         |  I         | O          |  P           |
-  &kp Q        &kp W        &kp E        &kp R        &kp T                                                &kp Y        &kp U        &kp I        &kp O        &kp P
-//┼────────────┼────────────┼────────────┼────────────┼────────────┤                                       ├────────────┼────────────┼────────────┼────────────┼──────────────┤
-//|  A         |  S         |  D         |  F         |  G         |                                       |  H         |  J         |  K         | L          |  ;           |
-  &kp A        &hml LALT S  &hml LCTRL D &hml LGUI F  &kp G                                                &kp H        &kp J        &kp K        &kp L        &mt RCTRL SEMI
-//┼────────────┼────────────┼────────────┼────────────┼────────────┤                                       ├────────────┼────────────┼────────────┼────────────┼──────────────┤
-//|  Z         |  X         |  C         |  V         |  B         |                                       |  N         |  M         |  ,         | .          |  /           |
-  &mtb LSHFT Z &kp X        &kp C        &kp V        &kp B                                                &kp N        &kp M        &kp COMMA    &mtb RALT DOT &mtb RSHFT FSLH
-//├────────────┼────────────┼────────────┼────────────┼────────────┼────────────╮             ╭────────────┼────────────┼────────────┴────────────┼────────────┼──────────────┤
-  &mo TBS      &none        &kp ESC      &none        &mo LOWER    &mt LGUI TAB               &mtb RSHFT SPACE &mo RAISE             &kp RGUI     &none        &none
-//╰────────────┴────────────┴────────────╯            ╰────────────┴────────────╯             ╰────────────┴────────────╯            ╰────────────┴────────────┴──────────────╯
+                MAC_QAZ40_BASE_LEFT_TOP                                               MAC_QAZ40_BASE_RIGHT_TOP
+                MAC_QAZ40_BASE_LEFT_MIDDLE                                            MAC_QAZ40_BASE_RIGHT_MIDDLE
+                MAC_QAZ40_BASE_LEFT_BOTTOM                                            MAC_QAZ40_BASE_RIGHT_BOTTOM
+                &mo TBS  &none  &kp ESC  &none  &mo MAC(LOWER)  &mt MAC(SHORT) TAB    MAC_QAZ_BASE_RIGHT_THUMBS  &none  &none
             >;
         };
 
@@ -355,18 +327,10 @@
             display-name = "raise_layer";
             sensor-bindings = <&enc_var LG(PLUS) LG(MINUS)>;
             bindings = <
-//┬────────────┬────────────┬────────────┬────────────┬────────────╮                                       ╭────────────┬────────────┬────────────┬────────────┬──────────────╮
-//|  /         |  7         |  8         |  9         |  -         |                                       |            |            |            |            |  -           |
-  &kp MY_DIVIDE &kp MY_N7   &kp MY_N8    &kp MY_N9    &kp MY_MINUS                                         &none        &kp BSPC     &kp DEL      &kp TAB      &kp MINUS
-//┼────────────┼────────────┼────────────┼────────────┼────────────┤                                       ├────────────┼────────────┼────────────┼────────────┼──────────────┤
-//|  *         |  4         |  5         |  6         |  +         |                                       |            |            |            |            |              |
-  &kp MY_MULTIPLY &hml LALT MY_N4 &hml LCTRL MY_N5 &hml LGUI MY_N6 &kp MY_PLUS                             &kp LEFT     &kp DOWN     &kp UP       &kp RIGHT    &mt RCTRL RET
-//┼────────────┼────────────┼────────────┼────────────┼────────────┤                                       ├────────────┼────────────┼────────────┼────────────┼──────────────┤
-//|  0         |  1         |  2         |  3         |  =         |                                       |            |            |            |            |              |
-  &mtb LSHFT MY_N0 &kp MY_N1 &kp MY_N2   &kp MY_N3    &kp MY_EQUAL                                         &kp HOME     &kp PG_DN    &kp PG_UP    &mtb RALT END &kp RSHFT
-//├────────────┼────────────┼────────────┼────────────┼────────────┼────────────╮             ╭────────────┼────────────┼────────────┴────────────┼────────────┼──────────────┤
-  &none        &none        &kp SPACE    &none        &lt ADJUST MY_DOT &mt LGUI BSPC         &none        &none                     &none        &none        &none
-//╰────────────┴────────────┴────────────╯            ╰────────────┴────────────╯             ╰────────────┴────────────╯            ╰────────────┴────────────┴──────────────╯
+                MAC_QAZ40_RAISE_LEFT_TOP                                                         MAC_QAZ40_RAISE_RIGHT_TOP
+                MAC_QAZ40_RAISE_LEFT_MIDDLE                                                      MAC_QAZ40_RAISE_RIGHT_MIDDLE
+                MAC_QAZ40_RAISE_LEFT_BOTTOM                                                      MAC_QAZ40_RAISE_RIGHT_BOTTOM
+                &none  &none  &kp SPACE  &none  &lt MAC(ADJUST) MAC(DOT)  &mt MAC(SHORT) BSPC    MAC_QAZ_RAISE_RIGHT_THUMBS  &none  &none
             >;
         };
 
@@ -374,18 +338,10 @@
             display-name = "lower_layer";
             sensor-bindings = <&enc_var C_BRI_UP C_BRI_DN>;
             bindings = <
-//┬────────────┬────────────┬────────────┬────────────┬────────────╮                                       ╭────────────┬────────────┬────────────┬────────────┬──────────────╮
-//|  ?         |  "         |  !         |            |  ~         |                                       |            |  _         |  (         |  )         |  %           |
-  &kp QMARK    &kp DQT      &kp EXCL     &kp BSPC     &kp TILDE                                            &none        &kp UNDER    &kp LPAR     &kp RPAR     &kp PRCNT
-//┼────────────┼────────────┼────────────┼────────────┼────────────┤                                       ├────────────┼────────────┼────────────┼────────────┼──────────────┤
-//|  @         |  '         |  $         |            |  /         |                                       |  #         |            |  [         |  ]         |              |
-  &kp AT      &hml LALT SQT &kp DLLR     &kp DEL      &kp FSLH                                             &kp HASH     &none        &kp LBKT     &kp RBKT     &kp RCTRL
-//┼────────────┼────────────┼────────────┼────────────┼────────────┤                                       ├────────────┼────────────┼────────────┼────────────┼──────────────┤
-//|            |  '         |  ^         |  |         |  \         |                                       |  &         |            |  {         |  }         |              |
-&mtb LSHFT RET &kp GRAVE    &kp CARET    &kp PIPE     &kp BSLH                                             &kp AMPS     &none        &kp LBRC     &kp RBRC     &kp RSHFT
-//├────────────┼────────────┼────────────┼────────────┼────────────┼────────────╮             ╭────────────┼────────────┼────────────┴────────────┼────────────┼──────────────┤
-  &none        &none        &kp SPACE    &none        &none        &none                       &mtb RSHFT RET &mo ADJUST             &none        &none        &none 
-//╰────────────┴────────────┴────────────╯            ╰────────────┴────────────╯             ╰────────────┴────────────╯            ╰────────────┴────────────┴──────────────╯
+                MAC_QAZ40_LOWER_LEFT_TOP                        MAC_QAZ40_LOWER_RIGHT_TOP
+                MAC_QAZ40_LOWER_LEFT_MIDDLE                     MAC_QAZ40_LOWER_RIGHT_MIDDLE
+                MAC_QAZ40_LOWER_LEFT_BOTTOM                     MAC_QAZ40_LOWER_RIGHT_BOTTOM
+                &none  &none  &kp SPACE  &none  &none  &none    MAC_QAZ_LOWER_RIGHT_THUMBS  &none  &none 
             >;
         };
 
@@ -393,73 +349,48 @@
             display-name = "adjust_layer";
             sensor-bindings = <&enc_var C_VOL_UP C_VOL_DN>;
             bindings = <
-//┬────────────┬────────────┬────────────┬────────────┬────────────╮                                       ╭────────────┬────────────┬────────────┬────────────┬──────────────╮
-  &kp C_MUTE   &kp F7       &kp F8       &kp F9       &kp F12                                              &msc SCRL_LEFT &msc SCRL_DOWN &msc SCRL_UP &msc SCRL_RIGHT &kp CAP_3
-//┼────────────┼────────────┼────────────┼────────────┼────────────┤                                       ├────────────┼────────────┼────────────┼────────────┼──────────────┤
-  &kp C_VOL_UP &kp F4       &kp F5       &kp F6       &kp F11                                              &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_UP &mmv MOVE_RIGHT &mt RCTL C_BRI_UP
-//┼────────────┼────────────┼────────────┼────────────┼────────────┤                                       ├────────────┼────────────┼────────────┼────────────┼──────────────┤
-&mt LSHFT C_VOL_DN &kp F1   &kp F2       &kp F3       &kp F10                                              &none        &kp RGUI     &kp RCTRL    &kp RALT     &mtb RSHFT C_BRI_DN
-//├────────────┼────────────┼────────────┼────────────┼────────────┼────────────╮             ╭────────────┼────────────┼────────────┴────────────┼────────────┼──────────────┤
-  &mo WIRELESS &none        LOCK         &none        &none        &none                       &mkp LCLK   &mkp RCLK                 &mkp MCLK    &none        &mo WIRELESS
-//╰────────────┴────────────┴────────────╯            ╰────────────┴────────────╯             ╰────────────┴────────────╯            ╰────────────┴────────────┴──────────────╯
+                MAC_QAZ40_ADJUST_LEFT_TOP                                     MAC_QAZ40_ADJUST_RIGHT_TOP
+                MAC_QAZ40_ADJUST_LEFT_MIDDLE                                  MAC_QAZ40_ADJUST_RIGHT_MIDDLE
+                MAC_QAZ40_ADJUST_LEFT_BOTTOM                                  MAC_QAZ40_ADJUST_RIGHT_BOTTOM
+                &mo WIRELESS  &none  MAC(LOCK)  &none  &none  MAC(UNLOCK)    &mkp LCLK  &mkp RCLK  &mkp MCLK  &none  &mo WIRELESS
             >;
         };
 
         MOUSE {
             display-name = "mouse_layer";
             bindings = <
-//┬────────────┬────────────┬────────────┬────────────┬────────────╮                                       ╭────────────┬────────────┬────────────┬────────────┬──────────────╮
-  &none        &none        &none        &none        &none                                                &none        &none        &none        &none        &none
-//┼────────────┼────────────┼────────────┼────────────┼────────────┤                                       ├────────────┼────────────┼────────────┼────────────┼──────────────┤
-  &none        &kp LALT     &kp LCTRL    &kp LGUI     &none                                                &none        &mkp LCLK    &mkp MCLK    &mkp RCLK    &mo SCROLL
-//┼────────────┼────────────┼────────────┼────────────┼────────────┤                                       ├────────────┼────────────┼────────────┼────────────┼──────────────┤
-  &kp LSHFT    &none        &none        &none        &none                                                &none        &mkp MB4     &mkp MB5     &none        &none
-//├────────────┼────────────┼────────────┼────────────┼────────────┼────────────╮             ╭────────────┼────────────┼────────────┴────────────┼────────────┼──────────────┤
-  &none        &none        &none        &none        &mo LOWER    &none                      &none        &none                     &none        &none        &none
-//╰────────────┴────────────┴────────────╯            ╰────────────┴────────────╯             ╰────────────┴────────────╯            ╰────────────┴────────────┴──────────────╯
+                QAZ40_NONE                                                    QAZ40_NONE
+                &none      &kp LALT  &kp LCTRL  &kp LGUI  &none               &none  &mkp LCLK  &mkp MCLK  &mkp RCLK  &mo SCROLL
+                &kp LSHFT  &none     &none      &none     &none               &none  &mkp MB4   &mkp MB5   &none      &none
+                &none      &none     &none      &none     &mo LOWER  &none    QAZ40_NONE
             >;
         };
 
         SCROLL {
             bindings = <
-//┬────────────┬────────────┬────────────┬────────────┬────────────╮                                       ╭────────────┬────────────┬────────────┬────────────┬──────────────╮
-  &none        &none        &none        &none        &none                                                &none        &none        &none        &none        &none
-//┼────────────┼────────────┼────────────┼────────────┼────────────┤                                       ├────────────┼────────────┼────────────┼────────────┼──────────────┤
-  &none        &kp LALT     &kp LCTRL    &kp LGUI     &none                                                &none        &mkp LCLK    &mkp MCLK    &mkp RCLK    &mo SCROLL
-//┼────────────┼────────────┼────────────┼────────────┼────────────┤                                       ├────────────┼────────────┼────────────┼────────────┼──────────────┤
-  &kp LSHFT    &none        &none        &none        &none                                                &none        &mkp MB4     &mkp MB5     &none        &none
-//├────────────┼────────────┼────────────┼────────────┼────────────┼────────────╮             ╭────────────┼────────────┼────────────┴────────────┼────────────┼──────────────┤
-  &none        &none        &none        &none        &none        &none                      &none        &none                     &none        &none        &none 
-//╰────────────┴────────────┴────────────╯            ╰────────────┴────────────╯             ╰────────────┴────────────╯            ╰────────────┴────────────┴──────────────╯
+                QAZ40_NONE                                                    QAZ40_NONE
+                &none      &kp LALT  &kp LCTRL  &kp LGUI  &none               &none  &mkp LCLK  &mkp MCLK  &mkp RCLK  &mo SCROLL
+                &kp LSHFT  &none     &none      &none     &none               &none  &mkp MB4   &mkp MB5   &none      &none
+                &none      &none     &none      &none     &none  &none        QAZ40_NONE
             >;
         };
 
         WIRELESS {
             bindings = <
-//┬────────────┬────────────┬────────────┬────────────┬────────────╮                                       ╭────────────┬────────────┬────────────┬────────────┬──────────────╮
-  &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4                                         &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4
-//┼────────────┼────────────┼────────────┼────────────┼────────────┤                                       ├────────────┼────────────┼────────────┼────────────┼──────────────┤
-  &none        &none        &none        &none        &none                                                &none        &none        &none        &none        &none 
-//┼────────────┼────────────┼────────────┼────────────┼────────────┤                                       ├────────────┼────────────┼────────────┼────────────┼──────────────┤
-  &none        &none        &none        &none        &none                                                &none        &none        &none        &none        &none 
-//├────────────┼────────────┼────────────┼────────────┼────────────┼────────────╮             ╭────────────┼────────────┼────────────┴────────────┼────────────┼──────────────┤
-  &none        &none        &none        &none        &none        &studio_unlock             &bt BT_CLR   &bt BT_CLR_ALL            &none        &none        &bootloader
-//╰────────────┴────────────┴────────────╯            ╰────────────┴────────────╯             ╰────────────┴────────────╯            ╰────────────┴────────────┴──────────────╯
+                BT_SEL_QAZ40               BT_SEL_QAZ40
+                QAZ40_NONE                 QAZ40_NONE
+                QAZ40_NONE                 QAZ40_NONE
+                QAZ40_NONE  MAC(UNLOCK)    &bt BT_CLR  &bt BT_CLR_ALL  &none  &none  &bootloader
             >;
         };
 
         TBS {
             sensor-bindings = <&enc_tb_rot_15>;
             bindings = <
-//┬────────────┬────────────┬────────────┬────────────┬────────────╮                                       ╭────────────┬────────────┬────────────┬────────────┬──────────────╮
-  &none        &none        &none        &none        &none                                                &none        &none        &none        &none        &none 
-//┼────────────┼────────────┼────────────┼────────────┼────────────┤                                       ├────────────┼────────────┼────────────┼────────────┼──────────────┤
-  &none        &none        &none        &none        &none                                                &none        &none        &none        &none        &none 
-//┼────────────┼────────────┼────────────┼────────────┼────────────┤                                       ├────────────┼────────────┼────────────┼────────────┼──────────────┤
-  &none        &none        &none        &none        &none                                                &none        &none        &none        &none        &none 
-//├────────────┼────────────┼────────────┼────────────┼────────────┼────────────╮             ╭────────────┼────────────┼────────────┴────────────┼────────────┼──────────────┤
-  &tb_dd       &none        &none        &none        &none        &studio_unlock             &none        &none                     &tbr TB_270_DEG  &tbr TB_CCW_45 &tbr TB_CW_45
-//╰────────────┴────────────┴────────────╯            ╰────────────┴────────────╯             ╰────────────┴────────────╯            ╰────────────┴────────────┴──────────────╯
+                QAZ40_NONE                                         QAZ40_NONE
+                QAZ40_NONE                                         QAZ40_NONE
+                QAZ40_NONE                                         QAZ40_NONE
+                &tb_dd  &none  &none  &none  &none  MAC(UNLOCK)    &none  &none  &tbr TB_270_DEG  &tbr TB_CCW_45  &tbr TB_CW_45
             >;
         };
     };
