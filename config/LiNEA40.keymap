@@ -11,6 +11,8 @@
 #include <input_processors/trackball_direction_detection.dtsi>
 #include <behaviors/trackball_shift_rotation.dtsi>
 #include <behaviors/trackball_direction_detection.dtsi>
+#include <zmk-input-inertia/input/processor/input_inertia.dtsi>
+#include <mouse-gesture.dtsi>
 #include "us_keymap.h"
 
 #define DEFAULT   0
@@ -46,6 +48,11 @@
 #define THUMBS     LEFT_THUMBS RIGHT_THUMBS
 
 #define BT_SEL_QAZ  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4
+
+#define LEFT_SPACE   LC(LEFT)
+#define RIGHT_SPACE  LC(RIGHT)
+#define MISSION_CTRL LC(UP)
+#define EXPOSE       LC(DOWN)
 
 //mouse cursol
 
@@ -88,6 +95,7 @@
     input-processors = <
             &zip_trackball_shift
             &zip_temp_layer MOUSE 5000
+            &zip_mouse_gesture
     >;
 
     scroller {
@@ -95,6 +103,7 @@
         input-processors = <
             &zip_trackball_shift
             &zip_xy_to_scroll_mapper &zip_scroll_scaler 1 100
+            &zip_inertia
         >;
     };
 
@@ -123,6 +132,48 @@
 
 &mkp_input_listener {
     input-processors = <&zip_temp_layer MOUSE 5000>;
+};
+
+&zip_inertia {
+    // 慣性が始まるまでの待ち時間 (推奨: センサーのポーリングレートの2倍以上)
+    trigger-ms = <35>; 
+
+    // --- マウス移動の設定 ---
+    move-decay-factor-int = <90>;       // 減衰率 (0-100)
+    move-report-interval-ms = <35>;     // レポート送信間隔 (ms)
+    move-threshold-start = <15>;        // 慣性が発動する最小移動量 (pix/report)
+    move-threshold-stop = <1>;          // 慣性が停止する移動量 (pix/report)
+
+    // --- スクロールの設定 ---
+    scroll-decay-factor-int = <90>;    // スクロール減衰率
+    scroll-report-interval-ms = <65>;  // スクロールレポート間隔 (ms)
+    scroll-threshold-start = <1>;      // 慣性が発動する最小スクロール量 (pix/report)
+    scroll-threshold-stop = <0>;       // 慣性が停止するスクロール量 (pix/report)
+};
+
+&zip_mouse_gesture {
+    stroke-size = <100>; // default: 200
+    enable-eager-mode;
+
+    ges_left_space {
+        pattern = <GESTURE_LEFT>;
+        bindings = <&kp LEFT_SPACE>;
+    };
+
+    ges_right_space {
+        pattern = <GESTURE_RIGHT>;
+        bindings = <&kp RIGHT_SPACE>;
+    };
+
+    ges_mission_ctrl {
+        pattern = <GESTURE_UP>;
+        bindings = <&kp MISSION_CTRL>;
+    };
+
+    ges_expose {
+        pattern = <GESTURE_DOWN>;
+        bindings = <&kp EXPOSE>;
+    };
 };
 
 &zip_trackball_shift {
@@ -360,7 +411,7 @@
             display-name = "mouse_layer";
             bindings = <
                 QAZ_NONE                                                      QAZ_NONE
-                &none      &kp LALT  &kp LCTRL  &kp LGUI  &none               &none  &mkp LCLK  &mkp MCLK  &mkp RCLK  &mo SCROLL
+                &none      &kp LALT  &kp LCTRL  &kp LGUI  &none               &none  &mkp LCLK  &mkp RCLK  &mouse_gesture  &mo SCROLL
                 &kp LSHFT  &none     &none      &none     &none               &none  &mkp MB4   &mkp MB5   &none      &none
                 &none      &none     &none      &none     &mo LOWER  &none    QAZ_NONE
             >;
