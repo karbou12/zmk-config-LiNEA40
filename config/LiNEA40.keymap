@@ -45,7 +45,7 @@
 #define RIGHT_KEYS RIGHT_TOP RIGHT_MID RIGHT_BOTTOM
 #define THUMBS     LEFT_THUMBS RIGHT_THUMBS
 
-#define BT_SEL_QAZ40  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4
+#define BT_SEL_QAZ  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4
 
 //mouse cursol
 
@@ -316,9 +316,9 @@
             display-name = "Default";
             sensor-bindings = <&enc_root>;
             bindings = <
-                MAC_QAZ40_BASE_LEFT_TOP                                               MAC_QAZ40_BASE_RIGHT_TOP
-                MAC_QAZ40_BASE_LEFT_MIDDLE                                            MAC_QAZ40_BASE_RIGHT_MIDDLE
-                MAC_QAZ40_BASE_LEFT_BOTTOM                                            MAC_QAZ40_BASE_RIGHT_BOTTOM
+                MAC_QAZ_BASE_LEFT_TOP                                                 MAC_QAZ_BASE_RIGHT_TOP
+                MAC_QAZ_BASE_LEFT_MIDDLE                                              MAC_QAZ_BASE_RIGHT_MIDDLE
+                MAC_QAZ_BASE_LEFT_BOTTOM                                              MAC_QAZ_BASE_RIGHT_BOTTOM
                 &mo TBS  &none  &kp ESC  &none  &mo MAC(LOWER)  &mt MAC(SHORT) TAB    MAC_QAZ_BASE_RIGHT_THUMBS  &none  &none
             >;
         };
@@ -327,9 +327,9 @@
             display-name = "raise_layer";
             sensor-bindings = <&enc_var LG(PLUS) LG(MINUS)>;
             bindings = <
-                MAC_QAZ40_RAISE_LEFT_TOP                                                         MAC_QAZ40_RAISE_RIGHT_TOP
-                MAC_QAZ40_RAISE_LEFT_MIDDLE                                                      MAC_QAZ40_RAISE_RIGHT_MIDDLE
-                MAC_QAZ40_RAISE_LEFT_BOTTOM                                                      MAC_QAZ40_RAISE_RIGHT_BOTTOM
+                MAC_QAZ_RAISE_LEFT_TOP                                                           MAC_QAZ_RAISE_RIGHT_TOP
+                MAC_QAZ_RAISE_LEFT_MIDDLE                                                        MAC_QAZ_RAISE_RIGHT_MIDDLE
+                MAC_QAZ_RAISE_LEFT_BOTTOM                                                        MAC_QAZ_RAISE_RIGHT_BOTTOM
                 &none  &none  &kp SPACE  &none  &lt MAC(ADJUST) MAC(DOT)  &mt MAC(SHORT) BSPC    MAC_QAZ_RAISE_RIGHT_THUMBS  &none  &none
             >;
         };
@@ -338,9 +338,9 @@
             display-name = "lower_layer";
             sensor-bindings = <&enc_var C_BRI_UP C_BRI_DN>;
             bindings = <
-                MAC_QAZ40_LOWER_LEFT_TOP                        MAC_QAZ40_LOWER_RIGHT_TOP
-                MAC_QAZ40_LOWER_LEFT_MIDDLE                     MAC_QAZ40_LOWER_RIGHT_MIDDLE
-                MAC_QAZ40_LOWER_LEFT_BOTTOM                     MAC_QAZ40_LOWER_RIGHT_BOTTOM
+                MAC_QAZ_LOWER_LEFT_TOP                          MAC_QAZ_LOWER_RIGHT_TOP
+                MAC_QAZ_LOWER_LEFT_MIDDLE                       MAC_QAZ_LOWER_RIGHT_MIDDLE
+                MAC_QAZ_LOWER_LEFT_BOTTOM                       MAC_QAZ_LOWER_RIGHT_BOTTOM
                 &none  &none  &kp SPACE  &none  &none  &none    MAC_QAZ_LOWER_RIGHT_THUMBS  &none  &none 
             >;
         };
@@ -349,9 +349,9 @@
             display-name = "adjust_layer";
             sensor-bindings = <&enc_var C_VOL_UP C_VOL_DN>;
             bindings = <
-                MAC_QAZ40_ADJUST_LEFT_TOP                                     MAC_QAZ40_ADJUST_RIGHT_TOP
-                MAC_QAZ40_ADJUST_LEFT_MIDDLE                                  MAC_QAZ40_ADJUST_RIGHT_MIDDLE
-                MAC_QAZ40_ADJUST_LEFT_BOTTOM                                  MAC_QAZ40_ADJUST_RIGHT_BOTTOM
+                MAC_QAZ_ADJUST_LEFT_TOP                                      MAC_QAZ_ADJUST_RIGHT_TOP
+                MAC_QAZ_ADJUST_LEFT_MIDDLE                                   MAC_QAZ_ADJUST_RIGHT_MIDDLE
+                MAC_QAZ_ADJUST_LEFT_BOTTOM                                   MAC_QAZ_ADJUST_RIGHT_BOTTOM
                 &mo WIRELESS  &none  MAC(LOCK)  &none  &none  MAC(UNLOCK)    &mkp LCLK  &mkp RCLK  &mkp MCLK  &none  &mo WIRELESS
             >;
         };
@@ -359,37 +359,37 @@
         MOUSE {
             display-name = "mouse_layer";
             bindings = <
-                QAZ40_NONE                                                    QAZ40_NONE
+                QAZ_NONE                                                      QAZ_NONE
                 &none      &kp LALT  &kp LCTRL  &kp LGUI  &none               &none  &mkp LCLK  &mkp MCLK  &mkp RCLK  &mo SCROLL
                 &kp LSHFT  &none     &none      &none     &none               &none  &mkp MB4   &mkp MB5   &none      &none
-                &none      &none     &none      &none     &mo LOWER  &none    QAZ40_NONE
+                &none      &none     &none      &none     &mo LOWER  &none    QAZ_NONE
             >;
         };
 
         SCROLL {
             bindings = <
-                QAZ40_NONE                                                    QAZ40_NONE
+                QAZ_NONE                                                      QAZ_NONE
                 &none      &kp LALT  &kp LCTRL  &kp LGUI  &none               &none  &mkp LCLK  &mkp MCLK  &mkp RCLK  &mo SCROLL
                 &kp LSHFT  &none     &none      &none     &none               &none  &mkp MB4   &mkp MB5   &none      &none
-                &none      &none     &none      &none     &none  &none        QAZ40_NONE
+                QAZ_NONE   &none                                              QAZ_NONE
             >;
         };
 
         WIRELESS {
             bindings = <
-                BT_SEL_QAZ40               BT_SEL_QAZ40
-                QAZ40_NONE                 QAZ40_NONE
-                QAZ40_NONE                 QAZ40_NONE
-                QAZ40_NONE  MAC(UNLOCK)    &bt BT_CLR  &bt BT_CLR_ALL  &none  &none  &bootloader
+                BT_SEL_QAZ               BT_SEL_QAZ
+                QAZ_NONE                 QAZ_NONE
+                QAZ_NONE                 QAZ_NONE
+                QAZ_NONE  MAC(UNLOCK)    &bt BT_CLR  &bt BT_CLR_ALL  &none  &none  &bootloader
             >;
         };
 
         TBS {
             sensor-bindings = <&enc_tb_rot_15>;
             bindings = <
-                QAZ40_NONE                                         QAZ40_NONE
-                QAZ40_NONE                                         QAZ40_NONE
-                QAZ40_NONE                                         QAZ40_NONE
+                QAZ_NONE                                           QAZ_NONE
+                QAZ_NONE                                           QAZ_NONE
+                QAZ_NONE                                           QAZ_NONE
                 &tb_dd  &none  &none  &none  &none  MAC(UNLOCK)    &none  &none  &tbr TB_270_DEG  &tbr TB_CCW_45  &tbr TB_CW_45
             >;
         };
