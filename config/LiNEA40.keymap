@@ -54,6 +54,16 @@
 #define MISSION_CTRL LC(UP)
 #define EXPOSE       LC(DOWN)
 
+#define MV_LEFT_WIN     kp LS(LG(LEFT))
+#define MV_RIGHT_WIN    kp LS(LG(RIGHT))
+#define MV_TOP_WIN      kp LS(LG(UP))
+#define MV_BOTTOM_WIN   kp LS(LG(DOWN))
+
+#define MV_TOP_LEFT_WIN      kp LS(LA(LEFT))
+#define MV_TOP_RIGHT_WIN     kp LS(LA(UP))
+#define MV_BOTTOM_LEFT_WIN   kp LS(LA(DOWN))
+#define MV_BOTTOM_RIGHT_WIN  kp LS(LA(RIGHT))
+
 //mouse cursol
 
 &mmv {
@@ -80,6 +90,55 @@
             type = <INPUT_EV_REL>;
             codes = <INPUT_REL_WHEEL>;
             track-remainders;
+        };
+
+        zip_tiling_gesture: zip_tiling_gesture {
+            compatible = "zmk,input-processor-mouse-gesture";
+            #input-processor-cells = <0>;
+
+            stroke-size = <100>; // default: 200
+            enable-eager-mode;
+            suppress-movement;
+
+            ges_left_win {
+                pattern = <GESTURE_LEFT>;
+                bindings = <&MV_LEFT_WIN>;
+            };
+
+            ges_right_win {
+                pattern = <GESTURE_RIGHT>;
+                bindings = <&MV_RIGHT_WIN>;
+            };
+
+            ges_top_win {
+                pattern = <GESTURE_UP>;
+                bindings = <&MV_TOP_WIN>;
+            };
+
+            ges_bottom_win {
+                pattern = <GESTURE_DOWN>;
+                bindings = <&MV_BOTTOM_WIN>;
+            };
+
+            ges_top_left_win {
+                pattern = <GESTURE_UP GESTURE_LEFT>;
+                bindings = <&MV_TOP_LEFT_WIN>;
+            };
+
+            ges_top_right_win {
+                pattern = <GESTURE_UP GESTURE_RIGHT>;
+                bindings = <&MV_TOP_RIGHT_WIN>;
+            };
+
+            ges_bottom_left_win {
+                pattern = <GESTURE_DOWN GESTURE_LEFT>;
+                bindings = <&MV_BOTTOM_LEFT_WIN>;
+            };
+
+            ges_bottom_right_win {
+                pattern = <GESTURE_DOWN GESTURE_RIGHT>;
+                bindings = <&MV_BOTTOM_RIGHT_WIN>;
+            };
         };
     };
 };
@@ -111,8 +170,10 @@
         layers = <LOWER>;
         input-processors = <
             &zip_xy_scaler 1 4
+            &zip_trackball_shift
+            &zip_temp_layer MOUSE 5000
+            &zip_tiling_gesture
         >;
-        process-next;
     };
 
     trackball_shift_detection {
