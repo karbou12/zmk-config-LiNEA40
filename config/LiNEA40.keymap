@@ -154,6 +154,7 @@
 &zip_mouse_gesture {
     stroke-size = <100>; // default: 200
     enable-eager-mode;
+    suppress-movement;
 
     ges_left_space {
         pattern = <GESTURE_LEFT>;
