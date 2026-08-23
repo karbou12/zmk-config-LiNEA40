@@ -14,6 +14,7 @@
 #include <zmk-input-inertia/input/processor/input_inertia.dtsi>
 #include <mouse-gesture.dtsi>
 #include "us_keymap.h"
+#include "us_encoder.h"
 
 #define DEFAULT   0
 #define RAISE     1
@@ -427,7 +428,7 @@
 
         DEFAULT {
             display-name = "Default";
-            sensor-bindings = <&enc_root>;
+            sensor-bindings = <&enc_base_root>;
             bindings = <
                 MAC_QAZ_BASE_LEFT_TOP                                                 MAC_QAZ_BASE_RIGHT_TOP
                 MAC_QAZ_BASE_LEFT_MIDDLE                                              MAC_QAZ_BASE_RIGHT_MIDDLE
@@ -438,7 +439,7 @@
 
         RAISE {
             display-name = "raise_layer";
-            sensor-bindings = <&enc_var LG(PLUS) LG(MINUS)>;
+            sensor-bindings = <&enc_raise_root>;
             bindings = <
                 MAC_QAZ_RAISE_LEFT_TOP                                                           MAC_QAZ_RAISE_RIGHT_TOP
                 MAC_QAZ_RAISE_LEFT_MIDDLE                                                        MAC_QAZ_RAISE_RIGHT_MIDDLE
@@ -449,7 +450,7 @@
 
         LOWER {
             display-name = "lower_layer";
-            sensor-bindings = <&enc_var C_BRI_UP C_BRI_DN>;
+            sensor-bindings = <&enc_lower_root>;
             bindings = <
                 MAC_QAZ_LOWER_LEFT_TOP                          MAC_QAZ_LOWER_RIGHT_TOP
                 MAC_QAZ_LOWER_LEFT_MIDDLE                       MAC_QAZ_LOWER_RIGHT_MIDDLE
@@ -460,7 +461,7 @@
 
         ADJUST {
             display-name = "adjust_layer";
-            sensor-bindings = <&enc_var C_VOL_UP C_VOL_DN>;
+            sensor-bindings = <&enc_adjust_root>;
             bindings = <
                 MAC_QAZ_ADJUST_LEFT_TOP                                      MAC_QAZ_ADJUST_RIGHT_TOP
                 MAC_QAZ_ADJUST_LEFT_MIDDLE                                   MAC_QAZ_ADJUST_RIGHT_MIDDLE
