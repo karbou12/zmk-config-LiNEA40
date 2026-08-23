@@ -459,7 +459,7 @@
                 MAC_QAZ_LOWER_LEFT_TOP                          MAC_QAZ_LOWER_RIGHT_TOP
                 MAC_QAZ_LOWER_LEFT_MIDDLE                       MAC_QAZ_LOWER_RIGHT_MIDDLE
                 MAC_QAZ_LOWER_LEFT_BOTTOM                       MAC_QAZ_LOWER_RIGHT_BOTTOM
-                &none  &none  &kp SPACE  &none  &none  &none    MAC_QAZ_LOWER_RIGHT_THUMBS  &none  &none 
+                &none  &none  &kp SPACE  &none  &none  &none    MAC_QAZ_LOWER_RIGHT_THUMBS  &ZOOM_RESET  &ZOOM2_RESET
             >;
         };
 

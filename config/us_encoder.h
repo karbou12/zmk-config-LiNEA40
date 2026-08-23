@@ -17,6 +17,7 @@
 
 #define ZOOM_IN kp LG(PLUS)
 #define ZOOM_OUT kp LG(MINUS)
+#define ZOOM_RESET kp LG(N0)
 
 #define NEXT_SPACE_APP kp LC(LG(RIGHT))
 #define PREV_SPACE_APP kp LC(LG(LEFT))
@@ -28,6 +29,7 @@
 
 #define ZOOM2_IN kp LA(LG(EQUAL))
 #define ZOOM2_OUT kp LA(LG(MINUS))
+#define ZOOM2_RESET kp LA(LG(N8))
 
 #define MAC_REDO kp LS(LG(Z))
 #define MAC_UNDO kp LG(Z)
