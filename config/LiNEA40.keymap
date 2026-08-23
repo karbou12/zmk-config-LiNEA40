@@ -61,10 +61,10 @@
 #define MV_TOP_WIN      kp LS(LG(UP))
 #define MV_BOTTOM_WIN   kp LS(LG(DOWN))
 
-#define MV_TOP_LEFT_WIN      kp LS(LA(LEFT))
-#define MV_TOP_RIGHT_WIN     kp LS(LA(UP))
-#define MV_BOTTOM_LEFT_WIN   kp LS(LA(DOWN))
-#define MV_BOTTOM_RIGHT_WIN  kp LS(LA(RIGHT))
+#define MV_TOP_LEFT_WIN      kp LG(LA(LEFT))
+#define MV_TOP_RIGHT_WIN     kp LG(LA(UP))
+#define MV_BOTTOM_LEFT_WIN   kp LG(LA(DOWN))
+#define MV_BOTTOM_RIGHT_WIN  kp LG(LA(RIGHT))
 
 //mouse cursol
 
