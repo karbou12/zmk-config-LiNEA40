@@ -37,7 +37,7 @@
 #define WIN_REDO kp LC(Y)
 #define WIN_UNDO kp LC(Z)
 
-#if 0
+#if 1
 #define SCRL_UP_FAST    SCRL_UP
 #define SCRL_DOWN_FAST  SCRL_DOWN
 #define SCRL_LEFT_FAST  SCRL_LEFT
