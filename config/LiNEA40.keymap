@@ -189,7 +189,7 @@
 };
 
 &mkp_input_listener {
-    input-processors = <&zip_temp_layer MOUSE 5000>;
+    input-processors = <&zip_temp_layer MOUSE 250>;
 };
 
 &msc_input_listener {
