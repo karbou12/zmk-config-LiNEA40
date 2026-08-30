@@ -76,13 +76,12 @@
 
 //mouse scroll
 
-#if 0
 &msc {
-    delay-ms = <0>;
-    time-to-max-speed-ms = <0>;
+    delay-ms = <0>; // default: 0. LiNEA40 default: 3.
+    trigger-period-ms = <3>; // default: 16. LiNEA40 default: 3
+    time-to-max-speed-ms = <0>; //default: 0. LiNEA40 default: 100
     acceleration-exponent = <0>;
 };
-#endif
 
 / {
     input_processors {
@@ -195,7 +194,7 @@
 &msc_input_listener {
     input-processors = <
         &zip_scroll_transform INPUT_TRANSFORM_Y_INVERT
-        &zip_scroll_scaler 1 3
+        &zip_scroll_scaler 1 6
         &zip_inertia
     >;
 };
