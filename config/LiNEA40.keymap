@@ -215,6 +215,8 @@
     scroll-report-interval-ms = <65>;  // スクロールレポート間隔 (ms)
     scroll-threshold-start = <1>;      // 慣性が発動する最小スクロール量 (pix/report)
     scroll-threshold-stop = <0>;       // 慣性が停止するスクロール量 (pix/report)
+
+    cancel-scroll-inertia-on-ctrl;
 };
 
 &zip_mouse_gesture {
