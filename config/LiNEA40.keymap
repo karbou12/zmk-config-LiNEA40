@@ -330,7 +330,7 @@
         };
 
         RAISE {
-            display-name = "raise_layer";
+            display-name = "Raise";
             sensor-bindings = <&enc_raise_root>;
             bindings = <
                 MAC_QAZ_RAISE_LEFT_TOP                                                           MAC_QAZ_RAISE_RIGHT_TOP
@@ -341,7 +341,7 @@
         };
 
         LOWER {
-            display-name = "lower_layer";
+            display-name = "Lower";
             sensor-bindings = <&enc_lower_root>;
             bindings = <
                 MAC_QAZ_LOWER_LEFT_TOP                          MAC_QAZ_LOWER_RIGHT_TOP
@@ -352,7 +352,7 @@
         };
 
         ADJUST {
-            display-name = "adjust_layer";
+            display-name = "Adjust";
             sensor-bindings = <&enc_adjust_root>;
             bindings = <
                 MAC_QAZ_ADJUST_LEFT_TOP                                      MAC_QAZ_ADJUST_RIGHT_TOP
@@ -363,7 +363,7 @@
         };
 
         MOUSE {
-            display-name = "mouse_layer";
+            display-name = "Mouse";
             bindings = <
                 QAZ_NONE                                                      QAZ_NONE
                 &none      &kp LALT  &kp LCTRL  &kp LGUI  &none               &none  &mkp LCLK  &mkp RCLK  &mouse_gesture  &mo SCROLL
@@ -373,6 +373,7 @@
         };
 
         SCROLL {
+            display-name = "Scroll";
             bindings = <
                 QAZ_NONE                                                      QAZ_NONE
                 &none      &kp LALT  &kp LCTRL  &kp LGUI  &none               &none  &mkp LCLK  &mkp MCLK  &mkp RCLK  &mo SCROLL
@@ -382,6 +383,7 @@
         };
 
         WIRELESS {
+            display-name = "Wireless";
             bindings = <
                 BT_SEL_QAZ               BT_SEL_QAZ
                 QAZ_NONE                 QAZ_NONE
@@ -391,6 +393,7 @@
         };
 
         TBS {
+            display-name = "Trackball Shift";
             sensor-bindings = <&enc_tb_rot_15>;
             bindings = <
                 QAZ_NONE                                           QAZ_NONE
