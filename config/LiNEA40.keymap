@@ -166,8 +166,8 @@
     snipe_layer {
         layers = <LOWER>;
         input-processors = <
-            &zip_xy_scaler 1 4
             &zip_trackball_shift
+            &zip_xy_scaler 1 4
             &zip_temp_layer MOUSE 5000
             &zip_tiling_gesture
         >;
