@@ -1,4 +1,5 @@
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 150
+#define ZMK_POINTING_DEFAULT_MOVE_VAL 1500
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 50
 
 #include <dt-bindings/zmk/input_transform.h>
 #include <input/processors.dtsi>
@@ -14,6 +15,7 @@
 #include <zmk-input-inertia/input/processor/input_inertia.dtsi>
 #include <mouse-gesture.dtsi>
 #include "us_keymap.h"
+#include "us_encoder.h"
 
 #define DEFAULT   0
 #define RAISE     1
@@ -59,26 +61,25 @@
 #define MV_TOP_WIN      kp LS(LG(UP))
 #define MV_BOTTOM_WIN   kp LS(LG(DOWN))
 
-#define MV_TOP_LEFT_WIN      kp LS(LA(LEFT))
-#define MV_TOP_RIGHT_WIN     kp LS(LA(UP))
-#define MV_BOTTOM_LEFT_WIN   kp LS(LA(DOWN))
-#define MV_BOTTOM_RIGHT_WIN  kp LS(LA(RIGHT))
+#define MV_TOP_LEFT_WIN      kp LG(LA(LEFT))
+#define MV_TOP_RIGHT_WIN     kp LG(LA(UP))
+#define MV_BOTTOM_LEFT_WIN   kp LG(LA(DOWN))
+#define MV_BOTTOM_RIGHT_WIN  kp LG(LA(RIGHT))
 
 //mouse cursol
 
 &mmv {
-    delay-ms = <20>;
-    trigger-period-ms = <5>;
-    time-to-max-speed-ms = <100>;
-    acceleration-exponent = <2>;
+    delay-ms = <0>;
+    time-to-max-speed-ms = <0>;
+    acceleration-exponent = <0>;
 };
 
 //mouse scroll
 
 &msc {
-    delay-ms = <3>;
-    trigger-period-ms = <3>;
-    time-to-max-speed-ms = <100>;
+    delay-ms = <0>; // default: 0. LiNEA40 default: 3.
+    trigger-period-ms = <3>; // default: 16. LiNEA40 default: 3
+    time-to-max-speed-ms = <0>; //default: 0. LiNEA40 default: 100
     acceleration-exponent = <0>;
 };
 
@@ -143,13 +144,6 @@
     };
 };
 
-&msc_input_listener {
-    /* speed_up { */
-    /*     layers = <FUNCTION>; */
-    /*     input-processors = <&zip_wheel_scaler 3 1>; //スクロールを3倍速にする */
-    /* }; */
-};
-
 &trackball_listener {
     input-processors = <
             &zip_trackball_shift
@@ -161,7 +155,9 @@
         layers = <SCROLL>;
         input-processors = <
             &zip_trackball_shift
-            &zip_xy_to_scroll_mapper &zip_scroll_scaler 1 100
+            &zip_xy_scaler 1 16
+            &zip_xy_to_scroll_mapper &zip_scroll_scaler 1 5
+            &zip_scroll_transform INPUT_TRANSFORM_X_INVERT
             &zip_inertia
         >;
     };
@@ -169,8 +165,8 @@
     snipe_layer {
         layers = <LOWER>;
         input-processors = <
-            &zip_xy_scaler 1 4
             &zip_trackball_shift
+            &zip_xy_scaler 1 4
             &zip_temp_layer MOUSE 5000
             &zip_tiling_gesture
         >;
@@ -192,7 +188,15 @@
 };
 
 &mkp_input_listener {
-    input-processors = <&zip_temp_layer MOUSE 5000>;
+    input-processors = <&zip_temp_layer MOUSE 250>;
+};
+
+&msc_input_listener {
+    input-processors = <
+        &zip_scroll_transform INPUT_TRANSFORM_Y_INVERT
+        &zip_scroll_scaler 1 6
+        &zip_inertia
+    >;
 };
 
 &zip_inertia {
@@ -210,6 +214,8 @@
     scroll-report-interval-ms = <65>;  // スクロールレポート間隔 (ms)
     scroll-threshold-start = <1>;      // 慣性が発動する最小スクロール量 (pix/report)
     scroll-threshold-stop = <0>;       // 慣性が停止するスクロール量 (pix/report)
+
+    cancel-scroll-inertia-on-ctrl;
 };
 
 &zip_mouse_gesture {
@@ -302,123 +308,10 @@
             hold-trigger-on-release;
         };
 
-        // for rotary encorder
-        // default    : down/up scroll
-        // w/shift    : left/right scroll
-        // w/alt      : left/right. w/shift : selectable
-        // w/alt+ctrl : down/up.    w/shift : selectable
-        // w/ctrl     : switch tab
-        // w/gui      : switch app
-        enc_shift_ctrl_ccw: encorder_shift_ctrl_ccw {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&msc SCRL_RIGHT>, <&kp LS(LC(TAB))>;
-
-            mods = <(MOD_LCTL|MOD_RCTL)>;
-        };
-
-        enc_shift_ctrl_cw: encorder_shift_ctrl_cw {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&msc SCRL_LEFT>, <&kp LC(TAB)>;
-
-            mods = <(MOD_LCTL|MOD_RCTL)>;
-        };
-
-        enc_alt_ctrl_ccw: encorder_alt_ctrl_ccw {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp LEFT>, <&kp UP>;
-
-            mods = <(MOD_LCTL|MOD_RCTL)>;
-        };
-
-        enc_alt_ctrl_cw: encorder_alt_ctrl_cw {
-            compatible = "zmk,behavior-mod-morph";
- 
-           #binding-cells = <0>;
-            bindings = <&kp RIGHT>, <&kp DOWN>;
-
-            mods = <(MOD_LCTL|MOD_RCTL)>;
-        };
-
-        enc_shift_alt_ctrl_ccw: encorder_shift_alt_ctrl_ccw {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&enc_shift_ctrl_ccw>, <&enc_alt_ctrl_ccw>;
-
-            mods = <(MOD_LALT|MOD_RALT)>;
-        };
-
-        enc_shift_alt_ctrl_cw: encorder_shift_alt_ctrl_cw {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&enc_shift_ctrl_cw>, <&enc_alt_ctrl_cw>;
-
-            mods = <(MOD_LALT|MOD_RALT)>;
-        };
-
-        enc_all_modifiers_ccw: encorder_all_modifiers_ccw {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&enc_shift_alt_ctrl_ccw>, <&kp LS(LG(TAB))>;
-
-            mods = <(MOD_LGUI|MOD_RGUI)>;
-            keep-mods = <(MOD_LGUI|MOD_RGUI)>;
-        };
-
-        enc_all_modifiers_cw: encorder_all_modifiers_cw {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&enc_shift_alt_ctrl_cw>, <&kp LG(TAB)>;
-
-            mods = <(MOD_LGUI|MOD_RGUI)>;
-            keep-mods = <(MOD_LGUI|MOD_RGUI)>;
-        };
-
-        enc_ccw: encorder_ccw {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&msc SCRL_DOWN>, <&enc_all_modifiers_ccw>;
-
-            mods = <(MOD_LSFT|MOD_RSFT|MOD_LALT|MOD_RALT|MOD_LCTL|MOD_RCTL|MOD_LGUI|MOD_RGUI)>;
-        };
-
-        enc_cw: encorder_cw {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&msc SCRL_UP>, <&enc_all_modifiers_cw>;
-
-            mods = <(MOD_LSFT|MOD_RSFT|MOD_LALT|MOD_RALT|MOD_LCTL|MOD_RCTL|MOD_LGUI|MOD_RGUI)>;
-        };
-
-        enc_root: encorder_root {
-            compatible = "zmk,behavior-sensor-rotate";
-            #sensor-binding-cells = <0>;
-            bindings = <&enc_cw>, <&enc_ccw>;
-
-            tap-ms = <20>;
-        };
-
-        /* re_kp: sensor_rotate_kp { */
-        enc_var: encorder_variable {
-            compatible = "zmk,behavior-sensor-rotate-var";
-            #sensor-binding-cells = <2>;
-            bindings = <&kp>, <&kp>;
-        };
-
         enc_tb_rot_15: enc_tr15 {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
             bindings = <&tbr TB_CW_15>, <&tbr TB_CCW_15>;
-        };
-
-        mouse_scrl: mouse_wheel_scrl {
-            compatible = "zmk,behavior-sensor-rotate-var";
-            #sensor-binding-cells = <2>;
-            bindings = <&msc>, <&msc>;
-
-            tap-ms = <20>;
         };
     };
 
@@ -427,7 +320,7 @@
 
         DEFAULT {
             display-name = "Default";
-            sensor-bindings = <&enc_root>;
+            sensor-bindings = <&enc_base_root>;
             bindings = <
                 MAC_QAZ_BASE_LEFT_TOP                                                 MAC_QAZ_BASE_RIGHT_TOP
                 MAC_QAZ_BASE_LEFT_MIDDLE                                              MAC_QAZ_BASE_RIGHT_MIDDLE
@@ -437,8 +330,8 @@
         };
 
         RAISE {
-            display-name = "raise_layer";
-            sensor-bindings = <&enc_var LG(PLUS) LG(MINUS)>;
+            display-name = "Raise";
+            sensor-bindings = <&enc_raise_root>;
             bindings = <
                 MAC_QAZ_RAISE_LEFT_TOP                                                           MAC_QAZ_RAISE_RIGHT_TOP
                 MAC_QAZ_RAISE_LEFT_MIDDLE                                                        MAC_QAZ_RAISE_RIGHT_MIDDLE
@@ -448,19 +341,19 @@
         };
 
         LOWER {
-            display-name = "lower_layer";
-            sensor-bindings = <&enc_var C_BRI_UP C_BRI_DN>;
+            display-name = "Lower";
+            sensor-bindings = <&enc_lower_root>;
             bindings = <
                 MAC_QAZ_LOWER_LEFT_TOP                          MAC_QAZ_LOWER_RIGHT_TOP
                 MAC_QAZ_LOWER_LEFT_MIDDLE                       MAC_QAZ_LOWER_RIGHT_MIDDLE
                 MAC_QAZ_LOWER_LEFT_BOTTOM                       MAC_QAZ_LOWER_RIGHT_BOTTOM
-                &none  &none  &kp SPACE  &none  &none  &none    MAC_QAZ_LOWER_RIGHT_THUMBS  &none  &none 
+                &none  &none  &kp SPACE  &none  &none  &none    MAC_QAZ_LOWER_RIGHT_THUMBS  &ZOOM_RESET  &ZOOM2_RESET
             >;
         };
 
         ADJUST {
-            display-name = "adjust_layer";
-            sensor-bindings = <&enc_var C_VOL_UP C_VOL_DN>;
+            display-name = "Adjust";
+            sensor-bindings = <&enc_adjust_root>;
             bindings = <
                 MAC_QAZ_ADJUST_LEFT_TOP                                      MAC_QAZ_ADJUST_RIGHT_TOP
                 MAC_QAZ_ADJUST_LEFT_MIDDLE                                   MAC_QAZ_ADJUST_RIGHT_MIDDLE
@@ -470,7 +363,7 @@
         };
 
         MOUSE {
-            display-name = "mouse_layer";
+            display-name = "Mouse";
             bindings = <
                 QAZ_NONE                                                      QAZ_NONE
                 &none      &kp LALT  &kp LCTRL  &kp LGUI  &none               &none  &mkp LCLK  &mkp RCLK  &mouse_gesture  &mo SCROLL
@@ -480,6 +373,7 @@
         };
 
         SCROLL {
+            display-name = "Scroll";
             bindings = <
                 QAZ_NONE                                                      QAZ_NONE
                 &none      &kp LALT  &kp LCTRL  &kp LGUI  &none               &none  &mkp LCLK  &mkp MCLK  &mkp RCLK  &mo SCROLL
@@ -489,6 +383,7 @@
         };
 
         WIRELESS {
+            display-name = "Wireless";
             bindings = <
                 BT_SEL_QAZ               BT_SEL_QAZ
                 QAZ_NONE                 QAZ_NONE
@@ -498,6 +393,7 @@
         };
 
         TBS {
+            display-name = "Trackball Shift";
             sensor-bindings = <&enc_tb_rot_15>;
             bindings = <
                 QAZ_NONE                                           QAZ_NONE
